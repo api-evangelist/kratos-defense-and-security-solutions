@@ -4,84 +4,37 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Kratos Defense & Security Solutions
 providerId: kratos-defense-and-security-solutions
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
+  - Rate Limiting
   - Defense
   - Security
   - Unmanned Systems
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Kratos Defense & Security Solutions API surface.
-  Captures per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold
-  values to be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: Kratos does not publish API rate limits in the public domain. Throttling is applied per
+  program / per-customer enclave and surfaced only inside gated documentation tied to the underlying
+  contract.
+sources:
+  - https://developer.kratosdefense.com
+notes: Public rate-limit documentation is not available. Reconcile from program-specific gated documentation
+  once authorized access is obtained.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Kratos Defense & Security Solutions API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Kratos Defense & Security Solutions API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Kratos Defense & Security Solutions API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Kratos Defense & Security Solutions API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Kratos Defense & Security Solutions API
+  - name: Per-program API throttling
+    scope: program
+    metric: varies
+    limit: 'see program / contract documentation'
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Backoff
+    description: Implement exponential backoff with jitter on 429/5xx responses; honor Retry-After.
+  - name: Idempotency
+    description: For state-changing endpoints, use idempotency keys and audit trail per the program's
+      cybersecurity controls (e.g. NIST 800-171, CMMC).
+  - name: Enclave isolation
+    description: Limits and authentication scopes are typically partitioned per program enclave; cross-program
+      sharing requires explicit ATO.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
