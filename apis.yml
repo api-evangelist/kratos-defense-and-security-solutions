@@ -28,6 +28,8 @@ apis:
     description: >-
       The Kratos Defense & Security Solutions API provides access to platform services and data for enterprise integration and automation.
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/kratos-defense-and-security-solutions
   - type: Website
     url: https://www.kratosdefense.com
 maintainers:
