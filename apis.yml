@@ -33,7 +33,7 @@ tags:
 description: >-
   Kratos Defense & Security Solutions is a major US corporation and Fortune 1000 company. The Kratos Defense & Security Solutions API provides programmatic access to its platform services, data, and integrations for enterprise customers and partners.
 created: '2026-04-19'
-modified: '2026-04-19'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
   - aid: kratos-defense-and-security-solutions:kratos-defense-and-security-solutions-api
@@ -51,6 +51,8 @@ apis:
     description: >-
       The Kratos Defense & Security Solutions API provides access to platform services and data for enterprise integration and automation.
 common:
+  - url: https://www.kratosdefense.com/newsroom
+    type: Blog
   - type: DomainSecurity
     url: security/kratos-defense-and-security-solutions-domain-security.yml
   - type: LinkedIn
